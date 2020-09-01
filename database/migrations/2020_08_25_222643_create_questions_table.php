@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateQuestionsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('questions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('description');
+            $table->string('review');
+            $table->unsignedInteger('exams_topics_id')->nullable();
+            $table->foreign('exams_topics_id')
+                ->references('id')
+                ->on('exams_topics');
+            $table->integer('status')->default(1); //0: Inactivo 1: Activo
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('questions');
+    }
+}
